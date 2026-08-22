@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Same Score, Different Kind — Benchmark Fiber Structure and the Undeclared Choice of Reference</title>
-<meta name="description" content="A benchmark's fiber structure is fixed at construction and generally undeclared. Draft v0.6.">
+<meta name="description" content="A benchmark's fiber structure is fixed at construction and generally undeclared. Working paper, draft v0.9.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -342,16 +342,16 @@ footer{
   <h1>Same Score,<br>Different Kind</h1>
   <p class="subtitle">Benchmark fiber structure and the undeclared choice of reference</p>
   <div class="draftbar">
-    Draft v0.8 · not for citation<br>
+    Draft v0.9 · not for citation<br>
     Citation gate run 2026-08 · references [1]–[3] confirmed at publisher record<br>
-    §5 anchors ungated · remedy mechanics added §4.5 · see ledger
+    §5 cut in v0.9 rather than deployed ungated · one claim in §1.1 remains unanchored and is marked · see ledger
   </div>
 </header>
 
 <section id="abstract">
   <p class="lede">A benchmark's <em>fiber structure</em> — the family of systems it cannot distinguish — is fixed at construction and is generally undeclared. Kind-claims asserted on the basis of a benchmark score depend silently on that partition.</p>
 
-  <p>The exhibit that would expose the dependence is finite and cheap, and it has been produced: in 2023 the EvalPlus authors demonstrated, with a named model pair, that HumanEval's rankings were an artifact of test-suite thinness. What followed is the subject of this essay. The demonstration was absorbed — it produced a new instrument, which was adopted — and it did not retire the instrument it refuted, which continued to appear on essentially every frontier model card for the next three years and was eventually retired for saturation instead.</p>
+  <p>The exhibit that would expose the dependence is finite and cheap, and it has been produced: in 2023 the EvalPlus authors demonstrated, with a named model pair, that HumanEval's rankings were an artifact of test-suite thinness. What followed is the subject of this essay. The demonstration was absorbed — it produced a new instrument, which was adopted — and it did not retire the instrument it refuted, which continued to circulate alongside its replacement and was eventually retired on other grounds.</p>
 
   <p>The mechanism proposed here is narrower than a claim that the field ignores validity. An evaluation loop corrects exactly those defects that are detectable without a declared reference — score compression, corpus overlap — and is structurally blind to those that require constructing a reference to see. The undeclared choice of reference is therefore not merely something practitioners neglect to state. It determines which defects the ecosystem is capable of noticing at all.</p>
 </section>
@@ -409,11 +409,13 @@ footer{
 
   <p><strong>The critique was adopted.</strong> EvalPlus acquired a leaderboard, entered the field's instrument set, and was reported on. Validity information reached the adoption channel and produced a new instrument. Any account claiming the field is simply deaf to validity critique is refuted by this essay's own central case.</p>
 
-  <p><strong>The critique retired nothing.</strong> HumanEval continued to be reported. As of 2026 it appears on the model cards of essentially every frontier release across vendors, tracked as the longest continuous series in code-generation benchmarking, retained on stated grounds of historical continuity and use as a floor test — not on grounds of validity. The two instruments coexisted; the discredited one kept circulating.</p>
+  <span class="tier u">Unanchored — see ledger</span>
+
+  <p><strong>The critique retired nothing.</strong> HumanEval continued to be reported after 2023, coexisting with its replacement rather than being displaced by it, and its retention has been justified on grounds of historical continuity and floor-testing rather than validity. <em>This paragraph is asserted from impression and has no citation.</em> It is load-bearing for §4.2, and the reader should treat that section as provisional until it is resolved. The specific quantitative form used in earlier drafts — that HumanEval appeared on essentially every frontier model card across vendors for three years — has been withdrawn as unsupported rather than weakened silently.</p>
 
   <p>When HumanEval's authority did decline, the stated grounds were <strong>saturation</strong> (frontier models clustering in the mid-to-high nineties, one- and two-point differences falling inside run-to-run and prompt-formatting variance) and <strong>contamination</strong>. The standard account of its trajectory runs: rapid adoption, optimization pressure, saturation, contamination evidence, replacement by a harder or rotating successor. The 2023 mis-ranking does not appear in that causal story.</p>
 
-  <p>The successor confirms the pattern. EvalPlus has itself been described as losing leaderboard attention once its own problems began saturating — retired by the same mechanism, not by any demonstration that its resolution was inadequate.</p>
+  <p>The successor may confirm the pattern. EvalPlus has been described as losing leaderboard attention once its own problems began saturating — retired by the same mechanism, not by any demonstration that its resolution was inadequate. This has not been verified and is logged as open.</p>
 </section>
 
 <section id="instance">
@@ -509,9 +511,11 @@ footer{
 
   <p>This is what saturation actually is. The fiber over the top score was equally wide in 2021; nothing about it changed. What changed is that models moved into it. HumanEval's resolution was adequate in 2021 not because its fibers were finer then but because the systems being compared were spread across many of them.</p>
 
-  <p>The consequence for the remedy is direct. A declaration written at construction can enumerate the partition, but it cannot predict which regions the population will occupy three years later. Static disclosure is therefore necessary and insufficient, and §4.3 has to answer for that.</p>
+  <p>The consequence for the remedy is direct. A declaration written at construction can enumerate the partition, but it cannot predict which regions the population will occupy three years later. Static disclosure is therefore necessary and insufficient, and §4.4 has to answer for that.</p>
 
   <h3>4.2 Why the asymmetry produces addition without subtraction</h3>
+
+  <p><em>This subsection inherits the unanchored claim marked in §1.1 and is provisional accordingly.</em></p>
 
   <p>Adoption is permeable to validity: a demonstrated defect motivates a successor, and a successor that fixes a visible defect is easy to justify. This is the channel EvalPlus used. Retirement is permeable only to ceiling-fiber widening. The two channels together produce a monotone instrument set — criticism can add, only saturation can remove — with the consequence that each demonstration of invalidity leaves the field holding one more number than before, the refuted one still circulating alongside its replacement, often with the longer comparison series behind it.</p>
 
@@ -551,74 +555,66 @@ footer{
 
   <div class="callout">
     <span class="cl-head">One remedy the mechanism rules out</span>
-    <p>Bounties or prizes for producing collision and inversion exhibits are refuted by §1. EvalPlus is what that policy produces: an independent team, a major venue, a named pair, a demonstrated inversion. The instrument it refuted circulated for three more years. If exhibits do not retire instruments, subsidising more exhibits does not change the outcome — it produces more instruments, which is the addition-without-subtraction result restated. Any proposed remedy should be checked against this case before being offered.</p>
-  </div>
-</section>
-
-<section id="designation">
-  <h2><span class="num">§5</span>A case where the designation moved</h2>
-
-  <span class="tier u">Ungated — anchors pending</span>
-
-  <p>One might grant all of this and hold that some reference is nonetheless correct — that a well-chosen benchmark measures capability as such, and the trouble is only that we have chosen badly. Against this it helps to have a domain where the designation of a reference has already moved, and where nothing in the present dispute turns on it.</p>
-
-  <p>Musical notation supplies one. A score is standardly called a lossy encoding of music: the page holds neither phrasing nor timbre nor microtiming. Run the mapping the other way and the loss is equally real — a recording does not determine enharmonic spelling, voicing, or metric interpretation. Both directions collapse distinctions the other preserves. Only one is conventionally called lossy, and which one shifted with the arrival of recording as a form of musical authority. Under notation-primary designation, a performance realizes a constraint and its divergences are not losses. Under performance-primary designation, the score becomes degraded residue. The media did not change; the verdict inverted.</p>
-
-  <p>One sentence transfers. A score admits many performances and supplies no weights over them — performance practice supplies the weights, by convention. A benchmark score is the dangerous cousin: it is a <em>number</em>, so it presents as though it carried a measure over its fiber, when the mapping from score to kind supplies no weights at all. It resembles calibration and is convention.</p>
-
-  <div class="callout">
-    <span class="cl-head">Standing defect</span>
-    <p>The historical claim in this section is currently unsupported. Candidate anchors have been identified but not resolved at publisher record, and are therefore not cited. This section must not be deployed in its present state.</p>
+    <p>Bounties or prizes for producing collision and inversion exhibits are refuted by §1. EvalPlus is what that policy produces: an independent team, a major venue, a named pair, a demonstrated inversion. The instrument it refuted kept circulating alongside it. If exhibits do not retire instruments, subsidising more exhibits does not change the outcome — it produces more instruments, which is the addition-without-subtraction result restated. Any proposed remedy should be checked against this case before being offered.</p>
   </div>
 </section>
 
 <section id="objections">
-  <h2><span class="num">§6</span>Objections</h2>
+  <h2><span class="num">§5</span>Objections</h2>
+
+  <p><strong>"But some reference is nonetheless the correct one."</strong> One might grant all of this and hold that a well-chosen benchmark measures capability as such, the trouble being only that we have chosen badly. The definition in §2 is the reply, and it needs no case to make it: lossiness is a three-place relation between a map, a reference, and a task. A benchmark that has not declared <em>R</em> and <em>T</em> has not made a claim that admits of being correct or incorrect about kind. This is a logical point about the form of the claim, not an empirical bet about which reference practitioners should prefer. <em>An earlier draft argued the same point through a historical case in musical notation. That case was cut in v0.9 rather than deployed without an anchor; see the ledger.</em></p>
 
   <p><strong>"Any instrument has fibers; this proves too much."</strong> Correct and intended. The claim is not that fibers are a defect but that an instrument's resolution is determinable and undeclared, and that kind-claims depend silently on the undeclared part. The remedy is declaration, not fineness. Note also that §2.1's stronger failure — inversion — is not a generic property of scalar instruments. A thermometer collapses microstates but does not misorder temperatures, because its measurement is monotonic in the target quantity. That monotonicity is a substantive property some instruments have and others lack, and it is the line worth arguing over.</p>
 
   <p><strong>"The case confounds saturation with invalidity."</strong> True, and unresolvable within one case. HumanEval saturated <em>and</em> was contaminated <em>and</em> was shown to mis-rank, and nothing here separates which absence of effect belongs to what. §1 is offered as an existence proof for the conjunction — demonstrated, published, not retiring — not as a law.</p>
 
-  <p><strong>"Survivorship."</strong> A benchmark genuinely retired for demonstrated invalidity would, by construction, be underrepresented in 2026 retrospectives: it would have vanished early and quietly. The §4 mechanism is a claim about a population resting on one prominent survivor, and until the study in §7 runs it should be read as scoped to at least one central case.</p>
+  <p><strong>"Survivorship."</strong> A benchmark genuinely retired for demonstrated invalidity would, by construction, be underrepresented in 2026 retrospectives: it would have vanished early and quietly. The §4 mechanism is a claim about a population resting on one prominent survivor, and until the study in §6 runs it should be read as scoped to at least one central case.</p>
 
   <p><strong>"One case, and a coding benchmark at that."</strong> Granted. A second exhibit from a different failure mode is the first open item.</p>
+
+  <p><strong>"The fiber framing is not new."</strong> Possibly not, and this is under active check. A 2026 preprint appears to apply fiber vocabulary to benchmarks directly, including quantitative mixed-fiber audits across several scientific domains. It has not been resolved at publisher record and is therefore not cited here. If it holds, the paper's contribution narrows to the mechanism in §4 and the case in §1, which is where it should have been anyway.</p>
 </section>
 
 <section id="status">
-  <h2><span class="num">§7</span>Status</h2>
+  <h2><span class="num">§6</span>Status</h2>
 
   <div class="ledger">
     <div class="row"><span class="st v">Verified</span><span>Reference [1] confirmed at arXiv publisher record: 80× augmentation, 26 models, pass@k reduction 19.3–28.9%, mis-ranking finding, named model pair. Author string corrected — Semantic Scholar renders the second author as "Chun Xia"; correct form is Chunqiu Steven Xia.</span></div>
     <div class="row"><span class="st v">Verified</span><span>Reference [2]: 164 problems, average 7.7 unit tests per problem, traced to the primary.</span></div>
     <div class="row"><span class="st u">Discrepancy</span><span><sup>†</sup> Two secondary sources (2024–25) report ≈9.6 test cases per problem for HumanEval rather than 7.7. Counting convention unresolved. The figure used here is the primary's; the discrepancy is logged rather than silently resolved.</span></div>
     <div class="row"><span class="st v">Verified</span><span>Reference [3] confirmed: 60 benchmarks, 14 properties, five hypotheses; nearly half saturated; saturation rises with age; hiding test data shows no protective effect; expert-curated benchmarks resist better than crowdsourced. Accepted at ICML 2026.</span></div>
-    <div class="row"><span class="st u">Ungated</span><span>§5's historical claim about recording and score authority has no anchor. Candidate sources identified, none resolved at publisher record, none cited. Section blocked from deployment.</span></div>
+    <div class="row"><span class="st u">Unanchored</span><span>The continued-circulation claim in §1.1 has no citation and is load-bearing for §4.2. Both are marked in place. The earlier quantitative form — "essentially every frontier model card across vendors for three years" — is withdrawn as unsupported rather than weakened silently. Test: code a sample of post-2023 frontier model cards for whether HumanEval is reported and on what stated grounds.</span></div>
+    <div class="row"><span class="st u">Cut</span><span>§5 in v0.8 argued that the designation of a lossy channel has already moved once, using musical notation and recording. Its historical claim had no anchor, and the section carried an instruction that it must not be deployed in that state — while being deployed. Cut in v0.9 rather than shipped ungated. The argumentative work it did is now carried by the first objection in §5, which needs no case. Candidate anchors remain deliberately unnamed anywhere in this repository.</span></div>
+    <div class="row"><span class="st u">Ungated</span><span>A 2026 preprint appears to apply fiber vocabulary to benchmarks directly, with quantitative mixed-fiber audits. Surfaced in search, not resolved at publisher record, not cited. If confirmed it is prior art on the §2 framing and the paper must be repositioned around §4 and §1. Top gate item.</span></div>
     <div class="row"><span class="st d">Unsupported</span><span>§4's mechanism rests on one case and is subject to the survivorship objection. Test: survey benchmark replacements coding each transition's stated proximate cause, predicting ceiling-fiber widening dominates and interior-fiber demonstrations are rare or absent. [3]'s sixty-benchmark dataset may hold part of this; the paper has been confirmed but not read in full.</span></div>
     <div class="row"><span class="st d">Open</span><span>A second exhibit from a different failure mode. Accuracy/calibration divergence is the candidate: equal accuracy, divergent expected calibration error, <em>T</em> = does the system know when it does not know.</span></div>
-    <div class="row"><span class="st d">Open</span><span>Whether EvalPlus was also retired without any demonstration of its own interior inadequacy. If so it becomes a second instance of the §4 mechanism rather than merely HumanEval's successor. Not checked.</span></div>
-    <div class="row"><span class="st d">Open</span><span>Institutional feasibility of §4.5. The forms are specified; whether any venue or leaderboard would adopt them is not, and no one who runs one has been asked.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Whether EvalPlus was also retired without any demonstration of its own interior inadequacy. If so it becomes a second instance of the §4 mechanism rather than merely HumanEval's successor. Asserted in §1.1 as unverified; not checked.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Institutional feasibility of §4.4 and §4.5. The forms are specified; whether any venue or leaderboard would adopt them is not, and no one who runs one has been asked. Supersedes a duplicate row in v0.8 that mis-numbered this as §4.3.</span></div>
     <div class="row"><span class="st d">Open</span><span>Title check. "Same Score, Different Kind" names the collision case; the evidence is inversion. Either retitle or foreground collision.</span></div>
-    <div class="row"><span class="st d">Open</span><span>Whether §4.3's reporting-requirement framing survives contact with anyone who runs a venue.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Legibility check on a real phone. Not yet run against this build.</span></div>
   </div>
 </section>
 
 <section id="panel">
-  <h2><span class="num">§8</span>Panel log</h2>
+  <h2><span class="num">§7</span>Panel log</h2>
 
   <p>Reviews were obtained from language models used as adversarial instruments. Standing discipline: panel agreement counts as approximately one signal, not several, because the instruments are correlated. Items are recorded whether taken or declined.</p>
 
   <div class="ledger">
     <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the ceiling/interior boundary is mislocated. Ceiling compression is itself a validity failure; an instrument reporting that frontier models are alike makes a kind-claim, and usually a false one. §4 rebuilt on detectability without a declared reference. This is the version the paper now argues, and it is a better fit to the evidence than either draft it replaces.</span></div>
     <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — fibers drift. The partition is fixed at construction but the population is not; optimization migrates systems into regions that were always coarse and previously empty. Added as §4.1, and it supplies a second independent defeater for the static-declaration remedy.</span></div>
-    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the inversion condition is non-monotonicity of the instrument's measurement with respect to the target ordering. Correlation is insufficient. Added to §2.1; it also sharpens the thermometer reply in §6.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the inversion condition is non-monotonicity of the instrument's measurement with respect to the target ordering. Correlation is insufficient. Added to §2.1; it also sharpens the thermometer reply in §5.</span></div>
     <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the portability argument is better framed as a selection effect for communicative efficiency than as a coordination failure. Scores survive retransmission; declarations do not. §4.3 renamed and rewritten.</span></div>
-    <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — replace the §5 musical case with a polling analogy. A poll is closer in being a number, but imports political contestation the argument does not need, and the objection that a score is <em>intentionally</em> underdetermined while a benchmark presents as complete is §5's thesis rather than a counter to it. §5 remains ungated and blocked; two reviewers finding it weak is one signal that it may not be worth anchoring at all.</span></div>
-    <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — survivorship is underweighted. §6 states the objection in full, including that a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction. The underlying advice — code a sample from [3]'s sixty rather than noting the dataset exists — is correct and is the standing top open item.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b>, retroactively — replace the musical-notation case. Declined in v0.8 on the grounds that the offered substitute imported problems of its own. The underlying signal was that the section was weak, and two reviewers had said so independently. In v0.9 the section is cut rather than substituted. The decline stands as recorded; the outcome went the reviewers' way by a different route.</span></div>
+    <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — survivorship is underweighted. §5 states the objection in full, including that a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction. The underlying advice — code a sample from [3]'s sixty rather than noting the dataset exists — is correct and is the standing top open item.</span></div>
     <div class="row"><span class="st d">Noted</span><span><b>Kimi</b> — EvalPlus's own fate should be checked for interior-fiber problems, not only saturation. Would make it a second instance rather than a successor. Not verified; open.</span></div>
     <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — vector reporting with an inversion flag. Requiring a tuple rather than a scalar, with leaderboards marking pairs whose ordering differs across axes, converts inversion from something that must be constructed into something visible in published numbers. Under §4 this is the decisive property: it moves interior inadequacy into the only channel the ecosystem reads. Added as §4.5, and it supplies the mechanics §4.4 previously admitted it lacked.</span></div>
     <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — property-based test generators, reframed. Offered as an alternative to fiber declarations; better understood as one in compiled form, since stating the properties <em>is</em> declaring <em>T</em> in a shape that can be re-run against a drifted population. Caveat added: a suite mutating per run randomizes which fiber a system lands in rather than removing the partition.</span></div>
     <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — age-based flagging. Benchmark age is computable without reference to any task, so it routes entirely through the permeable channel. Cheapest measure on the list.</span></div>
-    <div class="row"><span class="st u">Declined</span><span><b>Round 3</b> — bounties for producing collision and inversion exhibits. Refuted by §1: EvalPlus is what that policy produces, and the instrument it refuted circulated three more years. Recorded in §4.5 as a worked example of a remedy the mechanism rules out.</span></div>
+    <div class="row"><span class="st u">Declined</span><span><b>Round 3</b> — bounties for producing collision and inversion exhibits. Refuted by §1: EvalPlus is what that policy produces, and the instrument it refuted kept circulating. Recorded in §4.5 as a worked example of a remedy the mechanism rules out.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 4</b> — the ungated §5 was live on the public site while instructing that it must not be deployed. The gate was functioning as a label rather than a state. Section cut; the ledger now distinguishes cut from blocked, and the README no longer implies that marking is enforcement.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 4</b> — the continued-circulation claim was asserted in the abstract, §1.1, and the README lead, and appeared in no defect list. Now marked at the point of use, inherited-flag noted in §4.2, and logged. The quantitative form was withdrawn rather than softened silently.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 4</b> — two internal cross-references were wrong: §4.1 pointed at §4.3 for a remedy carried by §4.4, and a status row attributed the reporting requirement to §4.3. Both corrected; the second row was also a duplicate and has been merged.</span></div>
     <div class="row"><span class="st d">Noted</span><span><b>Round 3</b> — the review was framed as listing what the paper missed, and three of its four items restate §4.3 and §4.4. Opposite failure mode to Round 2: manufactured disagreement rather than manufactured agreement. Both are consistent with reading section headers rather than text, and neither should be weighted as independent signal.</span></div>
     <div class="row"><span class="st d">Noted</span><span>The Round 2 review opened with four paragraphs of praise before its first substantive item. Recorded because unearned agreement is the least informative output an instrument can produce, and because the same review restated an objection the paper already concedes — both are signs of reading review-shape rather than text.</span></div>
   </div>
@@ -636,17 +632,22 @@ footer{
     <div class="ref">
       <span class="rn">[2]</span>
       <span>Chen, Mark; Tworek, Jerry; Jun, Heewoo; et al. "Evaluating Large Language Models Trained on Code." arXiv:2107.03374, 2021.
-      <span class="rmeta"><span class="ok">resolved</span> · source of HumanEval; 164 problems, average 7.7 unit tests per problem · see discrepancy note in §7</span></span>
+      <span class="rmeta"><span class="ok">resolved</span> · source of HumanEval; 164 problems, average 7.7 unit tests per problem · see discrepancy note in §6</span></span>
     </div>
     <div class="ref">
       <span class="rn">[3]</span>
       <span>Akhtar, Mubashara; Reuel, Anka; Soni, Prajna; Ahuja, Sanchit; Ammanamanchi, Pawan Sasanka; Rawal, Ruchit; Zouhar, Vilém; et al. "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation." arXiv:2602.16763, submitted 18 February 2026. Accepted at ICML 2026.
-      <span class="rmeta"><span class="ok">resolved at publisher record</span> · 37 authors · dataset and code at the evaleval/benchmark-saturation repository</span></span>
+      <span class="rmeta"><span class="ok">resolved at publisher record</span> · 37 authors · dataset and code at the evaleval/benchmark-saturation repository · confirmed but not read in full</span></span>
     </div>
     <div class="ref">
       <span class="rn">[—]</span>
-      <span>§5 anchors: <span class="rmeta" style="display:inline"><span class="no">not resolved, not cited.</span></span>
-      <span class="rmeta">Candidate sources in the musicology of recording and the work-concept have been identified during drafting but are withheld pending DOI resolution. Naming them here would create exactly the citation-by-plausibility failure this protocol exists to prevent.</span></span>
+      <span>Withdrawn: anchors for the musical-notation case.
+      <span class="rmeta">The section they would have supported was cut in v0.9. Candidate sources in the musicology of recording and the work-concept were identified during drafting and remain deliberately unnamed anywhere in this repository, since listing plausible-looking titles is the failure this protocol exists to prevent.</span></span>
+    </div>
+    <div class="ref">
+      <span class="rn">[—]</span>
+      <span>Pending gate: a 2026 preprint applying fiber vocabulary to benchmarks.
+      <span class="rmeta"><span class="no">not resolved at publisher record, not cited.</span> Surfaced in search during v0.9 review. Held unnamed until it clears the gate, on the same principle as the entry above. If it clears, §2 is repositioned as restatement and the contribution narrows to §1 and §4.</span></span>
     </div>
   </div>
 </section>
@@ -655,7 +656,7 @@ footer{
   <p>Disclosure · D3: machine-drafted, human-directed, human-verification pending.<br>
   Citation gate run 2026-08 against publisher records. Legibility check pending on device.<br>
   Released CC0. No rights reserved.</p>
-  <p>Revision history: v0.1 initial · v0.2 scaffolding reduction · v0.3 exhibit demoted to existing practice, HumanEval promoted to evidence · v0.4 restructured to lead with the case · v0.5 central inference repaired (adoption permeable, retirement not); exhibit definition split into collision and inversion · v0.6 citation gate; §4 rewritten around the ceiling fiber following [3] · v0.7 §4 rebuilt on reference-free detectability after panel review; fiber drift added as §4.1; monotonicity condition added to §2.1; portability reframed as a selection effect; panel log added as §8 · v0.8 §4.5 added — remedy mechanics constrained by the mechanism, with one ruled-out remedy recorded.</p>
+  <p>Revision history: v0.1 initial · v0.2 scaffolding reduction · v0.3 exhibit demoted to existing practice, HumanEval promoted to evidence · v0.4 restructured to lead with the case · v0.5 central inference repaired (adoption permeable, retirement not); exhibit definition split into collision and inversion · v0.6 citation gate; §4 rewritten around the ceiling fiber following [3] · v0.7 §4 rebuilt on reference-free detectability after panel review; fiber drift added as §4.1; monotonicity condition added to §2.1; portability reframed as a selection effect; panel log added as §8 · v0.8 §4.5 added — remedy mechanics constrained by the mechanism, with one ruled-out remedy recorded · v0.9 ungated §5 cut rather than deployed against its own instruction, its argumentative work absorbed into the objections; continued-circulation claim marked at point of use and its quantitative form withdrawn; two internal cross-references corrected and one duplicate status row merged; sections renumbered §5–§7; possible prior art on the fiber framing logged as top gate item.</p>
 </footer>
 
 </div>
