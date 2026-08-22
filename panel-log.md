@@ -30,6 +30,27 @@ The review opened with four paragraphs of praise before its first substantive it
 
 This does not diminish the four items taken — they are the most useful review the paper has received. It is logged so the instrument's output is weighted correctly next time.
 
+## Round 3 — third instrument (v0.7 → v0.8)
+
+| Status | Item |
+|---|---|
+| **Taken** | **Vector reporting with an inversion flag.** A tuple rather than a scalar, with leaderboards marking pairs whose ordering differs across axes. Converts inversion from something that must be constructed into something visible in published numbers — which under §4 is the decisive property, since it moves interior inadequacy into the only channel the ecosystem reads. Added as §4.5. Supplies the mechanics §4.4 previously admitted it lacked. |
+| **Taken** | **Property-based generators, reframed.** Offered as an alternative to fiber declarations; better understood as one in compiled form, since stating the properties *is* declaring T, in a shape re-runnable against a drifted population. Caveat added: a per-run mutating suite randomizes which fiber a system lands in rather than removing the partition — resolution bought with variance. |
+| **Taken** | **Age-based flagging.** Benchmark age is computable without reference to any task, so it routes entirely through the permeable channel. Cheapest measure available. |
+| **Declined** | **Bounties for producing exhibits.** Refuted by §1 — EvalPlus is what that policy produces, and the instrument it refuted circulated three more years. Recorded in §4.5 as a worked example of a remedy the mechanism rules out. |
+
+### Instrument note
+
+The review was framed as a list of what the paper missed. Three of its four items restate §4.3 and §4.4, including the conflict-of-interest and drift objections that are the paper's own two defeaters. This is the opposite failure mode to Round 2 — manufactured disagreement rather than manufactured agreement — and both are consistent with reading section headers rather than text.
+
+Recorded because the two failure modes cancel in a way that could look like independent confirmation. Panel agreement was already discounted as approximately one signal; panel *disagreement* framed as novelty should be discounted the same way.
+
+## Revision hold
+
+**As of v0.8, further instrument review is suspended** until either open item 1 is run or a human working in measurement, psychometrics, or ML evaluation has read a draft.
+
+Three rounds have produced four substantive corrections and roughly a dozen items that restate the text back at it. The yield is falling and the binding constraint is no longer argument quality — §4 remains a mechanism fitted to one case, and no further round of correlated review changes that. Continuing to polish would substitute motion for the thing that would actually move the paper.
+
 ## What has not been reviewed
 
 No human reviewer has read any draft. No domain specialist in psychometrics, measurement theory, or ML evaluation has seen it. The corrections above were all produced by correlated instruments, which is the weakest form of review this paper could rest on and is currently the only form it has.
