@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same Score, Different Kind — Benchmark Fiber Structure and the Undeclared Choice of Reference</title>
+<meta name="description" content="A benchmark's fiber structure is fixed at construction and generally undeclared. Draft v0.6.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light dark;
+
+  --ground:#EDF0F2;
+  --panel:#E3E8EB;
+  --panel-deep:#D7DEE2;
+  --ink:#14181F;
+  --ink-soft:#4A5560;
+  --ink-faint:#6E7A85;
+  --rule:#C3CCD2;
+  --signal:#0F6E78;
+  --collapse:#A34428;
+  --collapse-tint:rgba(163,68,40,0.045);
+  --measure:66ch;
+
+  --serif:"Newsreader",Georgia,serif;
+  --display:"Instrument Serif",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+
+@media (prefers-color-scheme:dark){
+  :root{
+    --ground:#14171B;
+    --panel:#1D2228;
+    --panel-deep:#262C33;
+    --ink:#E9EDF0;
+    --ink-soft:#B0BAC3;
+    --ink-faint:#8A96A1;
+    --rule:#333B43;
+    --signal:#5FC7D1;
+    --collapse:#E29472;
+    --collapse-tint:rgba(226,148,114,0.08);
+  }
+  body{font-weight:340}
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth;background-color:var(--ground)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  min-height:100dvh;
+  background-color:var(--ground);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-optical-sizing:auto;
+  font-size:1.0625rem;
+  line-height:1.62;
+  font-weight:380;
+}
+
+.wrap{max-width:var(--measure);margin:0 auto;padding:0 1.35rem}
+
+/* ---------- masthead ---------- */
+
+.masthead{
+  border-bottom:1px solid var(--rule);
+  padding:3.5rem 0 2.25rem;
+  margin-bottom:2.5rem;
+}
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 0 1.5rem;
+}
+
+h1{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(2.6rem,10vw,4.1rem);
+  line-height:0.98;
+  letter-spacing:-0.015em;
+  margin:0 0 0.5rem;
+}
+
+.subtitle{
+  font-family:var(--display);
+  font-style:italic;
+  font-size:clamp(1.15rem,4.2vw,1.5rem);
+  line-height:1.25;
+  color:var(--ink-soft);
+  margin:0 0 2rem;
+  font-weight:400;
+}
+
+.draftbar{
+  font-family:var(--mono);
+  font-size:0.74rem;
+  line-height:1.7;
+  color:var(--ink-soft);
+  border-left:2px solid var(--collapse);
+  padding-left:0.85rem;
+}
+
+/* ---------- structure ---------- */
+
+section{margin:0 0 3.25rem}
+
+h2{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:1.85rem;
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  margin:3rem 0 1.1rem;
+  padding-top:1.4rem;
+  border-top:1px solid var(--rule);
+}
+
+h2 .num{
+  display:block;
+  font-family:var(--mono);
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  color:var(--signal);
+  margin-bottom:0.55rem;
+}
+
+h3{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.06rem;
+  letter-spacing:0.005em;
+  margin:2.1rem 0 0.6rem;
+}
+
+p{margin:0 0 1.05rem}
+
+.lede{
+  font-size:1.18rem;
+  line-height:1.55;
+  color:var(--ink);
+}
+
+strong{font-weight:650}
+em{font-style:italic}
+
+a{color:var(--signal);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+/* ---------- verification tags ---------- */
+
+.tier{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:0.18rem 0.45rem;
+  border:1px solid currentColor;
+  margin-bottom:0.6rem;
+  line-height:1.2;
+}
+.tier.v{color:var(--signal)}
+.tier.d{color:var(--ink-faint)}
+.tier.u{color:var(--collapse)}
+
+/* ---------- definition block ---------- */
+
+.def{
+  font-family:var(--mono);
+  font-size:0.83rem;
+  line-height:1.72;
+  background:var(--panel);
+  border-left:3px solid var(--signal);
+  padding:1.1rem 1.2rem;
+  margin:1.5rem 0;
+}
+.def .deflabel{
+  display:block;
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--signal);
+  margin-bottom:0.6rem;
+}
+.def em{font-style:italic}
+
+/* ---------- figure ---------- */
+
+figure{
+  margin:2.4rem 0;
+  padding:1.4rem 1.1rem 1.1rem;
+  background:var(--panel);
+  border:1px solid var(--rule);
+}
+figure svg{display:block;width:100%;height:auto}
+figcaption{
+  font-family:var(--mono);
+  font-size:0.73rem;
+  line-height:1.62;
+  color:var(--ink-soft);
+  margin-top:1rem;
+  padding-top:0.85rem;
+  border-top:1px solid var(--rule);
+}
+figcaption b{color:var(--ink);font-weight:700}
+
+.fig-label{font-family:var(--mono);font-size:14px;letter-spacing:0.05em;fill:var(--ink-faint)}
+.fig-model{font-family:var(--mono);font-size:16px;font-weight:500;fill:var(--ink)}
+.fig-axis{stroke:var(--rule);stroke-width:1}
+.fig-line{fill:none;stroke-width:2.25;stroke-linecap:round}
+.fig-line.up{stroke:var(--signal)}
+.fig-line.down{stroke:var(--collapse)}
+.fig-dot{stroke:var(--ground);stroke-width:2}
+.fig-dot.up{fill:var(--signal)}
+.fig-dot.down{fill:var(--collapse)}
+
+/* ---------- callout ---------- */
+
+.callout{
+  border:1px solid var(--collapse);
+  padding:1.15rem 1.2rem;
+  margin:1.8rem 0;
+  background:var(--collapse-tint);
+}
+.callout .cl-head{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--collapse);
+  display:block;
+  margin-bottom:0.6rem;
+}
+.callout p:last-child{margin-bottom:0}
+
+/* ---------- lists ---------- */
+
+ul,ol{margin:0 0 1.05rem;padding-left:1.3rem}
+li{margin-bottom:0.5rem}
+li::marker{color:var(--ink-faint)}
+
+.plain{list-style:none;padding-left:0}
+.plain li{
+  padding-left:1.15rem;
+  position:relative;
+}
+.plain li::before{
+  content:"—";
+  position:absolute;
+  left:0;
+  color:var(--signal);
+  font-family:var(--mono);
+  font-size:0.8rem;
+}
+
+/* ---------- ledger ---------- */
+
+.ledger{
+  font-family:var(--mono);
+  font-size:0.78rem;
+  line-height:1.6;
+  border-top:1px solid var(--rule);
+  margin-top:1.4rem;
+}
+.ledger .row{
+  display:grid;
+  grid-template-columns:5.2rem 1fr;
+  gap:0.8rem;
+  padding:0.85rem 0;
+  border-bottom:1px solid var(--rule);
+}
+.ledger .st{font-size:0.72rem;letter-spacing:0.09em;text-transform:uppercase;padding-top:0.15rem}
+.ledger .st.v{color:var(--signal)}
+.ledger .st.d{color:var(--ink-faint)}
+.ledger .st.u{color:var(--collapse)}
+
+/* ---------- references ---------- */
+
+.refs{font-family:var(--mono);font-size:0.79rem;line-height:1.66}
+.refs .ref{
+  padding:0.95rem 0;
+  border-bottom:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:2rem 1fr;
+  gap:0.7rem;
+}
+.refs .rn{color:var(--signal);font-weight:500}
+.refs .rmeta{
+  display:block;
+  margin-top:0.4rem;
+  font-size:0.72rem;
+  color:var(--ink-faint);
+}
+.refs .rmeta .ok{color:var(--signal)}
+.refs .rmeta .no{color:var(--collapse)}
+
+/* ---------- footer ---------- */
+
+footer{
+  border-top:1px solid var(--rule);
+  margin-top:3.5rem;
+  padding:2rem 0 4rem;
+  font-family:var(--mono);
+  font-size:0.73rem;
+  line-height:1.75;
+  color:var(--ink-faint);
+}
+
+/* ---------- wide screens: section numbers in the rail ---------- */
+
+@media (min-width:1080px){
+  .wrap{max-width:78ch;padding-left:11rem}
+  h2{position:relative}
+  h2 .num{
+    position:absolute;
+    left:-11rem;
+    top:1.4rem;
+    width:9rem;
+    margin:0;
+    text-align:right;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Solbakken Research Initiative · Working paper</p>
+  <h1>Same Score,<br>Different Kind</h1>
+  <p class="subtitle">Benchmark fiber structure and the undeclared choice of reference</p>
+  <div class="draftbar">
+    Draft v0.7 · not for citation<br>
+    Citation gate run 2026-08 · references [1]–[3] confirmed at publisher record<br>
+    §5 anchors ungated · §4 rebuilt after panel review · see ledger
+  </div>
+</header>
+
+<section id="abstract">
+  <p class="lede">A benchmark's <em>fiber structure</em> — the family of systems it cannot distinguish — is fixed at construction and is generally undeclared. Kind-claims asserted on the basis of a benchmark score depend silently on that partition.</p>
+
+  <p>The exhibit that would expose the dependence is finite and cheap, and it has been produced: in 2023 the EvalPlus authors demonstrated, with a named model pair, that HumanEval's rankings were an artifact of test-suite thinness. What followed is the subject of this essay. The demonstration was absorbed — it produced a new instrument, which was adopted — and it did not retire the instrument it refuted, which continued to appear on essentially every frontier model card for the next three years and was eventually retired for saturation instead.</p>
+
+  <p>The mechanism proposed here is narrower than a claim that the field ignores validity. An evaluation loop corrects exactly those defects that are detectable without a declared reference — score compression, corpus overlap — and is structurally blind to those that require constructing a reference to see. The undeclared choice of reference is therefore not merely something practitioners neglect to state. It determines which defects the ecosystem is capable of noticing at all.</p>
+</section>
+
+<section id="case">
+  <h2><span class="num">§1</span>The case</h2>
+
+  <span class="tier v">Verified at primary</span>
+
+  <p>HumanEval, released by OpenAI in 2021, consists of 164 hand-written Python problems scored by pass@k against unit tests — an average of 7.7 tests per problem [2].<sup>†</sup> It became the standard code-generation benchmark and remained so through 2023.</p>
+
+  <p>In 2023, Liu, Xia, Wang and Zhang published EvalPlus [1], which augmented each problem's test suite eightyfold by type-aware mutation and corner-case generation, then evaluated twenty-six models. Scores fell substantially: reported pass@k reductions of up to 19.3–28.9%. That alone establishes only that the original instrument was permissive.</p>
+
+  <p>The finding that matters is the second. The authors reported that test insufficiency produced <strong>mis-ranking</strong>, and named the pair: WizardCoder-CodeLlama and Phind-CodeLlama outperform ChatGPT under the augmented suite, and did so under neither on the original. Two systems the instrument ordered one way were ordered the other way by a stricter reading of the same 164 problems.</p>
+
+  <figure>
+    <svg viewBox="0 0 470 296" role="img" aria-label="Diagram: under HumanEval, ChatGPT ranks above WizardCoder-CodeLlama and Phind-CodeLlama; under HumanEval+, both rank above ChatGPT. The lines cross.">
+      <text class="fig-label" x="130" y="26" text-anchor="middle">HUMANEVAL</text>
+      <text class="fig-label" x="130" y="44" text-anchor="middle">7.7 TESTS</text>
+      <text class="fig-label" x="340" y="26" text-anchor="middle">HUMANEVAL+</text>
+      <text class="fig-label" x="340" y="44" text-anchor="middle">80× TESTS</text>
+
+      <line class="fig-axis" x1="130" y1="62" x2="130" y2="252"/>
+      <line class="fig-axis" x1="340" y1="62" x2="340" y2="252"/>
+
+      <path class="fig-line down" d="M130 90 L340 210"/>
+      <path class="fig-line up" d="M130 150 L340 90"/>
+      <path class="fig-line up" d="M130 210 L340 150"/>
+
+      <circle class="fig-dot down" cx="130" cy="90" r="5"/>
+      <circle class="fig-dot up" cx="130" cy="150" r="5"/>
+      <circle class="fig-dot up" cx="130" cy="210" r="5"/>
+      <circle class="fig-dot down" cx="340" cy="210" r="5"/>
+      <circle class="fig-dot up" cx="340" cy="90" r="5"/>
+      <circle class="fig-dot up" cx="340" cy="150" r="5"/>
+
+      <text class="fig-model" x="118" y="95" text-anchor="end">ChatGPT</text>
+      <text class="fig-model" x="118" y="155" text-anchor="end">WizardCoder</text>
+      <text class="fig-model" x="118" y="215" text-anchor="end">Phind</text>
+
+      <text class="fig-model" x="352" y="95">WizardCoder</text>
+      <text class="fig-model" x="352" y="155">Phind</text>
+      <text class="fig-model" x="352" y="215">ChatGPT</text>
+
+      <text class="fig-label" x="235" y="284" text-anchor="middle">RANK 1 AT TOP · ORDER INVERTED</text>
+    </svg>
+    <figcaption><b>Inversion, not merely deflation.</b> The augmented suite did not lower every score by a constant. It reversed the order of a named pair against a third system. The property every leaderboard-derived capability claim depends on is the ordering, and the ordering was an artifact of how many inputs decided correctness. Reconstructed from the reported result in [1]; positions are schematic, not plotted scores.</figcaption>
+  </figure>
+
+  <p>The distinction the original instrument could not resolve is correctness under boundary conditions, which no serious claim about code generation can do without.</p>
+
+  <h3>1.1 What followed</h3>
+
+  <p>Two things happened, and taking only one of them is how this argument goes wrong.</p>
+
+  <p><strong>The critique was adopted.</strong> EvalPlus acquired a leaderboard, entered the field's instrument set, and was reported on. Validity information reached the adoption channel and produced a new instrument. Any account claiming the field is simply deaf to validity critique is refuted by this essay's own central case.</p>
+
+  <p><strong>The critique retired nothing.</strong> HumanEval continued to be reported. As of 2026 it appears on the model cards of essentially every frontier release across vendors, tracked as the longest continuous series in code-generation benchmarking, retained on stated grounds of historical continuity and use as a floor test — not on grounds of validity. The two instruments coexisted; the discredited one kept circulating.</p>
+
+  <p>When HumanEval's authority did decline, the stated grounds were <strong>saturation</strong> (frontier models clustering in the mid-to-high nineties, one- and two-point differences falling inside run-to-run and prompt-formatting variance) and <strong>contamination</strong>. The standard account of its trajectory runs: rapid adoption, optimization pressure, saturation, contamination evidence, replacement by a harder or rotating successor. The 2023 mis-ranking does not appear in that causal story.</p>
+
+  <p>The successor confirms the pattern. EvalPlus has itself been described as losing leaderboard attention once its own problems began saturating — retired by the same mechanism, not by any demonstration that its resolution was inadequate.</p>
+</section>
+
+<section id="instance">
+  <h2><span class="num">§2</span>What the case is an instance of</h2>
+
+  <p>For a map <em>C</em> from inputs to outputs, the <strong>fiber</strong> over an output <em>y</em> is the preimage <em>C⁻¹(y)</em> — every input the map cannot distinguish from every other. The fibers partition the input space, and that partition is a fact about the map, settled at construction, prior to any user's purpose.</p>
+
+  <p>Whether a collapse counts as <em>loss</em> is not such a fact. It requires a designated reference and a discrimination task:</p>
+
+  <div class="def">
+    <span class="deflabel">Definition · lossiness</span>
+    <em>C</em> is lossy with respect to reference <em>R</em> and task <em>T</em> iff there exist <em>r₁, r₂ ∈ R</em> that <em>T</em> distinguishes but for which <em>C(r₁) = C(r₂)</em>.
+  </div>
+
+  <p>Two levels: the partition is objective, the verdict conventional. Rate-distortion theory has carried this structure since 1959 — the rate-distortion function is undefined until a distortion measure is chosen, and the choice is exogenous to the mathematics. Nothing here is new; the division of labor is what the argument uses.</p>
+
+  <h3>2.1 Fibers are not the only failure, and not the worst one</h3>
+
+  <p>The definition above describes <strong>collision</strong>: the instrument is silent where a kind-claim needs a difference. HumanEval's item-level resolution makes collisions cheap to see — within a problem, roughly eight inputs decide correctness, so every program agreeing on those inputs is one program as far as the instrument is concerned, however it behaves elsewhere.</p>
+
+  <p>But what EvalPlus exhibited is <strong>inversion</strong>: the instrument speaks, and orders two systems opposite to the way the relevant task orders them. Inversion is strictly worse. A silent instrument produces no claim; an inverting one produces a confident false claim, and nothing in the score marks the difference. Formally, inversion means the induced order is not a coarsening of the target order — a stronger failure than any coarsening.</p>
+
+  <p>The two are related. Inversion is what a collision looks like once the coarse regions are perturbed by noise, item selection, or scoring detail. A fiber wide enough to hold systems that differ on <em>T</em> will, under any tie-breaking pressure, order them arbitrarily. Coarse fibers are the condition; inversion is the symptom that reaches the leaderboard.</p>
+
+  <p>Stated as a condition: <strong>inversion occurs when the instrument's measurement is not monotonic with respect to the target ordering.</strong> Correlation is not enough. Correctness under 7.7 inputs is strongly correlated with correctness under 616 inputs and is not monotonic in it, which is exactly what permits a pair to swap. This is the property a scalar instrument must have to avoid inversion, and it is not automatic — a thermometer has it with respect to temperature, and HumanEval does not have it with respect to functional correctness.</p>
+
+  <h3>2.2 The substitution</h3>
+
+  <p>A <em>rate</em> claim ranks systems along a declared axis. A <em>kind</em> claim asserts category membership. When a rate instrument adjudicates a kind claim, a substitution between claim families has occurred. The case locates it: not smuggled into anyone's argument, but built into an instrument whose resolution was fixed without reference to the distinction later asked of it.</p>
+
+  <p>This is the relocation proposed here. The standard critique says <em>you have over-inferred from this number</em>; it addresses an arguer, and its remedy is modesty. The claim here is that the distinction required was already unresolvable before the argument began; it addresses an artifact, and its remedy is disclosure. Only the second is checkable by a third party without access to the arguer's reasoning.</p>
+</section>
+
+<section id="exhibit">
+  <h2><span class="num">§3</span>The exhibit already exists</h2>
+
+  <div class="def">
+    <span class="deflabel">Demand · discrimination-failure exhibit</span>
+    For a benchmark <em>B</em> and a kind-claim <em>K</em> asserted on its basis, exhibit systems <em>s₁, s₂</em> and a declared task <em>T</em> that <em>K</em> requires, such that either<br><br>
+    <strong>(a) collision</strong> — <em>B(s₁) ≈ B(s₂)</em> while <em>T</em> distinguishes them; or<br>
+    <strong>(b) inversion</strong> — <em>B</em> orders them oppositely to <em>T</em>.
+  </div>
+
+  <p>Either form shows <em>B</em> cannot support <em>K</em>, however carefully <em>K</em> is asserted. Inversion is the stronger exhibit and the one EvalPlus produced. If neither can be constructed after declared search, that is defeasible evidence the instrument's resolution suffices for <em>K</em>.</p>
+
+  <p>The demand has three properties construct-validity obligations typically lack:</p>
+
+  <ul class="plain">
+    <li><strong>Satisfiable.</strong> One pair suffices.</li>
+    <li><strong>Adversarially available.</strong> A reviewer with two systems and a task can run it, without access to the arguer's reasoning.</li>
+    <li><strong>Determinate negative.</strong> Failure to find a pair informs, provided the search was declared.</li>
+  </ul>
+
+  <p>The cost is that <em>T</em> must be stated in advance.</p>
+
+  <p><strong>None of this is proposed as new.</strong> EvalPlus is such an exhibit. So are adversarial probe sets, calibration reported alongside accuracy, and style-controlled preference aggregation. Each is performed by a party other than the instrument's constructor, after the fact, at that party's discretion. The proposal concerns <em>timing and obligation</em> only: the same artifact, produced at construction, as a condition of release. It is modest precisely because the method needs no demonstration. It has one, and §1 is what became of it.</p>
+</section>
+
+<section id="mechanism">
+  <h2><span class="num">§4</span>Detectability without a reference</h2>
+
+  <p>A deficit model — the field does not understand construct validity — is refuted by §1.1, where the critique was understood well enough to be adopted. The mechanism proposed is narrower, and a study published in 2026 makes it precise. It has also taken two corrections, recorded below rather than absorbed silently.</p>
+
+  <span class="tier v">Verified at primary</span>
+
+  <p>Akhtar et al. [3] analyse saturation across sixty LLM benchmarks drawn from major developers' technical reports, characterised along fourteen properties, and define saturation operationally: a benchmark is saturated when the evaluated models can no longer be reliably distinguished by their performance scores, with top performers statistically alike and approaching the benchmark's inferred ceiling.</p>
+
+  <div class="callout">
+    <span class="cl-head">Two corrections to §4 as previously drafted</span>
+    <p>That definition is a fiber statement. Saturation <em>is</em> fiber-widening — the fiber over the top score grown wide enough to hold every model anyone cares about. A v0.5 draft claimed that benchmark retirement is driven by headroom rather than by fibers. False.</p>
+    <p>A v0.6 draft then claimed the loop monitors the ceiling fiber and is blind to interior ones. Also false, or at least mislocated: ceiling compression <em>is</em> a validity failure. An instrument reporting that the frontier models are alike is making a kind-claim, and usually a wrong one. The boundary is not between the ceiling and the interior.</p>
+  </div>
+
+  <p>The boundary is <strong>detectability without a declared reference</strong>.</p>
+
+  <p>Ceiling compression is visible in the score distribution alone. One can see top performers converging on a ceiling without knowing what the benchmark is for, without naming a task, and without constructing anything. The defect announces itself in the numbers the leaderboard already publishes.</p>
+
+  <p>Interior inadequacy does not. To see that HumanEval mis-ranked, someone had to build an eightyfold test suite — that is, to construct a reference and declare a task. Nothing in HumanEval's own score distribution reveals it. The defect is invisible until a second instrument exists to see it with.</p>
+
+  <p>So the mechanism is this: <strong>the evaluation loop corrects exactly those defects detectable without a declared reference, and is structurally blind to the rest.</strong> Not indifference to validity — an inability to see the part of validity that requires a reference to see.</p>
+
+  <p>The two stated grounds for HumanEval's decline fit precisely. Saturation is reference-free: compute the score spread. Contamination is reference-free: compute n-gram overlap between test set and corpus. Both are properties of artifacts already in hand. Mis-ranking is not — it required Liu et al. to construct the thing that would reveal it. Of the instrument's three demonstrated defects, the two that counted are the two nobody needed a task definition to detect.</p>
+
+  <p>This returns the mechanism to the paper's subject. The undeclared choice of reference is not merely something practitioners neglect to state. It is the thing that determines which defects an evaluation ecosystem is capable of noticing at all.</p>
+
+  <p>Two supporting findings from [3] fit the account. Saturation rates rise as benchmarks age, which is what one expects if the ceiling region fills under sustained optimization pressure. And hiding test data confers no protective effect, which suggests the compression is driven by optimization rather than leakage alone.</p>
+
+  <h3>4.1 The partition is fixed; the population is not</h3>
+
+  <p>A refinement the argument needs, and which the earlier drafts got wrong by omission.</p>
+
+  <p>The fiber structure is fixed at construction — that claim stands. But a fiber is harmful only when it is <em>populated</em> by systems a relevant task distinguishes, and where the population sits in system-space is not fixed at construction. It moves. Optimization pressure migrates systems into regions of the instrument's partition that were always coarse and were previously empty.</p>
+
+  <p>This is what saturation actually is. The fiber over the top score was equally wide in 2021; nothing about it changed. What changed is that models moved into it. HumanEval's resolution was adequate in 2021 not because its fibers were finer then but because the systems being compared were spread across many of them.</p>
+
+  <p>The consequence for the remedy is direct. A declaration written at construction can enumerate the partition, but it cannot predict which regions the population will occupy three years later. Static disclosure is therefore necessary and insufficient, and §4.3 has to answer for that.</p>
+
+  <h3>4.2 Why the asymmetry produces addition without subtraction</h3>
+
+  <p>Adoption is permeable to validity: a demonstrated defect motivates a successor, and a successor that fixes a visible defect is easy to justify. This is the channel EvalPlus used. Retirement is permeable only to ceiling-fiber widening. The two channels together produce a monotone instrument set — criticism can add, only saturation can remove — with the consequence that each demonstration of invalidity leaves the field holding one more number than before, the refuted one still circulating alongside its replacement, often with the longer comparison series behind it.</p>
+
+  <p>Criticism, on this account, enlarges the surface over which a rate-to-kind substitution can be performed. The genre corrects by proliferation.</p>
+
+  <h3>4.3 A selection effect, not only a coordination failure</h3>
+
+  <p><em>The number is portable and the caveat is not.</em> A score survives transmission from paper to abstract to press release to policy brief; qualifications are stripped at each hop. The stripping is not adversarial — it is ordinary compression under attention scarcity.</p>
+
+  <p>It is worth naming what this is. Not merely a coordination failure among people who would each prefer to declare more, but a <strong>selection effect for communicative efficiency</strong>. A score is legible: portable, comparable, optimizable, and stable under retransmission. A fiber declaration is illegible: it requires reading, interpretation, and contextual judgment, and it does not survive being repeated by someone who did not read it. The instruments that propagate are the ones that compress most aggressively, and compression is precisely what destroys fiber information. The ecosystem is biased toward legibility over validity by the transmission medium itself, prior to anyone's incentives.</p>
+
+  <p>The incentives then aggravate it. Overclaiming is rarely sanctioned; declaring an instrument's limits forfeits claim strength and the attention that follows. No individual incentive exists to declare <em>T</em>, and declaring it is unilaterally costly.</p>
+
+  <h3>4.4 A remedy, and its own defeaters</h3>
+
+  <p>Require, with any benchmark release, a <strong>fiber declaration</strong>: an explicit statement of distinctions the instrument does not resolve, with at least one constructed exhibit per declared blindness. Modest, mechanically checkable, cost borne by the constructor rather than every downstream user, and requiring no methodological innovation.</p>
+
+  <p>The proposal is subject to two of the essay's own findings, and the findings are specific about how.</p>
+
+  <p><strong>From §4.2:</strong> a fiber declaration would enter through the adoption channel, which is permeable — so it could plausibly be established for new instruments. It would not touch the legacy stock. The likely outcome is a field in which new instruments carry declarations, old ones do not, both appear on the same model cards, and the substitution proceeds through the older numbers. The binding version is therefore not a release requirement but a <strong>reporting</strong> requirement: venues and leaderboards declining to accept scores from instruments without declarations. That reaches circulation rather than creation.</p>
+
+  <p><strong>From §4.1:</strong> a declaration fixed at construction cannot anticipate which regions of the partition the population will occupy later. The declaration would have to be a standing obligation rather than a one-time artifact — re-stated against the current field of systems, which is to say attached to the <em>reporting</em> of a score rather than to the release of an instrument. The two defeaters point at the same repair, which is weak evidence that the repair is the right one.</p>
+
+  <p>What remains unspecified is everything operational: which venue, what counts as a declaration, whether a sentence suffices or a validity appendix is required, and who adjudicates. I have no evidence the reporting version would work, and no proposal for its mechanics.</p>
+</section>
+
+<section id="designation">
+  <h2><span class="num">§5</span>A case where the designation moved</h2>
+
+  <span class="tier u">Ungated — anchors pending</span>
+
+  <p>One might grant all of this and hold that some reference is nonetheless correct — that a well-chosen benchmark measures capability as such, and the trouble is only that we have chosen badly. Against this it helps to have a domain where the designation of a reference has already moved, and where nothing in the present dispute turns on it.</p>
+
+  <p>Musical notation supplies one. A score is standardly called a lossy encoding of music: the page holds neither phrasing nor timbre nor microtiming. Run the mapping the other way and the loss is equally real — a recording does not determine enharmonic spelling, voicing, or metric interpretation. Both directions collapse distinctions the other preserves. Only one is conventionally called lossy, and which one shifted with the arrival of recording as a form of musical authority. Under notation-primary designation, a performance realizes a constraint and its divergences are not losses. Under performance-primary designation, the score becomes degraded residue. The media did not change; the verdict inverted.</p>
+
+  <p>One sentence transfers. A score admits many performances and supplies no weights over them — performance practice supplies the weights, by convention. A benchmark score is the dangerous cousin: it is a <em>number</em>, so it presents as though it carried a measure over its fiber, when the mapping from score to kind supplies no weights at all. It resembles calibration and is convention.</p>
+
+  <div class="callout">
+    <span class="cl-head">Standing defect</span>
+    <p>The historical claim in this section is currently unsupported. Candidate anchors have been identified but not resolved at publisher record, and are therefore not cited. This section must not be deployed in its present state.</p>
+  </div>
+</section>
+
+<section id="objections">
+  <h2><span class="num">§6</span>Objections</h2>
+
+  <p><strong>"Any instrument has fibers; this proves too much."</strong> Correct and intended. The claim is not that fibers are a defect but that an instrument's resolution is determinable and undeclared, and that kind-claims depend silently on the undeclared part. The remedy is declaration, not fineness. Note also that §2.1's stronger failure — inversion — is not a generic property of scalar instruments. A thermometer collapses microstates but does not misorder temperatures, because its measurement is monotonic in the target quantity. That monotonicity is a substantive property some instruments have and others lack, and it is the line worth arguing over.</p>
+
+  <p><strong>"The case confounds saturation with invalidity."</strong> True, and unresolvable within one case. HumanEval saturated <em>and</em> was contaminated <em>and</em> was shown to mis-rank, and nothing here separates which absence of effect belongs to what. §1 is offered as an existence proof for the conjunction — demonstrated, published, not retiring — not as a law.</p>
+
+  <p><strong>"Survivorship."</strong> A benchmark genuinely retired for demonstrated invalidity would, by construction, be underrepresented in 2026 retrospectives: it would have vanished early and quietly. The §4 mechanism is a claim about a population resting on one prominent survivor, and until the study in §7 runs it should be read as scoped to at least one central case.</p>
+
+  <p><strong>"One case, and a coding benchmark at that."</strong> Granted. A second exhibit from a different failure mode is the first open item.</p>
+</section>
+
+<section id="status">
+  <h2><span class="num">§7</span>Status</h2>
+
+  <div class="ledger">
+    <div class="row"><span class="st v">Verified</span><span>Reference [1] confirmed at arXiv publisher record: 80× augmentation, 26 models, pass@k reduction 19.3–28.9%, mis-ranking finding, named model pair. Author string corrected — Semantic Scholar renders the second author as "Chun Xia"; correct form is Chunqiu Steven Xia.</span></div>
+    <div class="row"><span class="st v">Verified</span><span>Reference [2]: 164 problems, average 7.7 unit tests per problem, traced to the primary.</span></div>
+    <div class="row"><span class="st u">Discrepancy</span><span><sup>†</sup> Two secondary sources (2024–25) report ≈9.6 test cases per problem for HumanEval rather than 7.7. Counting convention unresolved. The figure used here is the primary's; the discrepancy is logged rather than silently resolved.</span></div>
+    <div class="row"><span class="st v">Verified</span><span>Reference [3] confirmed: 60 benchmarks, 14 properties, five hypotheses; nearly half saturated; saturation rises with age; hiding test data shows no protective effect; expert-curated benchmarks resist better than crowdsourced. Accepted at ICML 2026.</span></div>
+    <div class="row"><span class="st u">Ungated</span><span>§5's historical claim about recording and score authority has no anchor. Candidate sources identified, none resolved at publisher record, none cited. Section blocked from deployment.</span></div>
+    <div class="row"><span class="st d">Unsupported</span><span>§4's mechanism rests on one case and is subject to the survivorship objection. Test: survey benchmark replacements coding each transition's stated proximate cause, predicting ceiling-fiber widening dominates and interior-fiber demonstrations are rare or absent. [3]'s sixty-benchmark dataset may hold part of this; the paper has been confirmed but not read in full.</span></div>
+    <div class="row"><span class="st d">Open</span><span>A second exhibit from a different failure mode. Accuracy/calibration divergence is the candidate: equal accuracy, divergent expected calibration error, <em>T</em> = does the system know when it does not know.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Whether EvalPlus was also retired without any demonstration of its own interior inadequacy. If so it becomes a second instance of the §4 mechanism rather than merely HumanEval's successor. Not checked.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Operational specification of the reporting requirement: which venue, what counts as a declaration, who adjudicates. No proposal offered.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Title check. "Same Score, Different Kind" names the collision case; the evidence is inversion. Either retitle or foreground collision.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Whether §4.3's reporting-requirement framing survives contact with anyone who runs a venue.</span></div>
+  </div>
+</section>
+
+<section id="panel">
+  <h2><span class="num">§8</span>Panel log</h2>
+
+  <p>Reviews were obtained from language models used as adversarial instruments. Standing discipline: panel agreement counts as approximately one signal, not several, because the instruments are correlated. Items are recorded whether taken or declined.</p>
+
+  <div class="ledger">
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the ceiling/interior boundary is mislocated. Ceiling compression is itself a validity failure; an instrument reporting that frontier models are alike makes a kind-claim, and usually a false one. §4 rebuilt on detectability without a declared reference. This is the version the paper now argues, and it is a better fit to the evidence than either draft it replaces.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — fibers drift. The partition is fixed at construction but the population is not; optimization migrates systems into regions that were always coarse and previously empty. Added as §4.1, and it supplies a second independent defeater for the static-declaration remedy.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the inversion condition is non-monotonicity of the instrument's measurement with respect to the target ordering. Correlation is insufficient. Added to §2.1; it also sharpens the thermometer reply in §6.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Kimi</b> — the portability argument is better framed as a selection effect for communicative efficiency than as a coordination failure. Scores survive retransmission; declarations do not. §4.3 renamed and rewritten.</span></div>
+    <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — replace the §5 musical case with a polling analogy. A poll is closer in being a number, but imports political contestation the argument does not need, and the objection that a score is <em>intentionally</em> underdetermined while a benchmark presents as complete is §5's thesis rather than a counter to it. §5 remains ungated and blocked; two reviewers finding it weak is one signal that it may not be worth anchoring at all.</span></div>
+    <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — survivorship is underweighted. §6 states the objection in full, including that a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction. The underlying advice — code a sample from [3]'s sixty rather than noting the dataset exists — is correct and is the standing top open item.</span></div>
+    <div class="row"><span class="st d">Noted</span><span><b>Kimi</b> — EvalPlus's own fate should be checked for interior-fiber problems, not only saturation. Would make it a second instance rather than a successor. Not verified; open.</span></div>
+    <div class="row"><span class="st d">Noted</span><span>The review opened with four paragraphs of praise before its first substantive item. Recorded because unearned agreement is the least informative output an instrument can produce, and because the same review restated an objection the paper already concedes — both are signs of reading review-shape rather than text.</span></div>
+  </div>
+</section>
+
+<section id="references">
+  <h2><span class="num">Refs</span>References</h2>
+
+  <div class="refs">
+    <div class="ref">
+      <span class="rn">[1]</span>
+      <span>Liu, Jiawei; Xia, Chunqiu Steven; Wang, Yuyao; Zhang, Lingming. "Is Your Code Generated by ChatGPT Really Correct? Rigorous Evaluation of Large Language Models for Code Generation." <em>Advances in Neural Information Processing Systems</em> 36 (NeurIPS 2023), 21558–21572. arXiv:2305.01210.
+      <span class="rmeta">DOI 10.48550/arXiv.2305.01210 · <span class="ok">resolved at publisher record</span> · v1 2 May 2023, v3 30 Oct 2023 · Note: ACM DL renders the venue with a 2024 proceedings date (article 943); this is the publication date of the NeurIPS 2023 proceedings, not a separate conference.</span></span>
+    </div>
+    <div class="ref">
+      <span class="rn">[2]</span>
+      <span>Chen, Mark; Tworek, Jerry; Jun, Heewoo; et al. "Evaluating Large Language Models Trained on Code." arXiv:2107.03374, 2021.
+      <span class="rmeta"><span class="ok">resolved</span> · source of HumanEval; 164 problems, average 7.7 unit tests per problem · see discrepancy note in §7</span></span>
+    </div>
+    <div class="ref">
+      <span class="rn">[3]</span>
+      <span>Akhtar, Mubashara; Reuel, Anka; Soni, Prajna; Ahuja, Sanchit; Ammanamanchi, Pawan Sasanka; Rawal, Ruchit; Zouhar, Vilém; et al. "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation." arXiv:2602.16763, submitted 18 February 2026. Accepted at ICML 2026.
+      <span class="rmeta"><span class="ok">resolved at publisher record</span> · 37 authors · dataset and code at the evaleval/benchmark-saturation repository</span></span>
+    </div>
+    <div class="ref">
+      <span class="rn">[—]</span>
+      <span>§5 anchors: <span class="rmeta" style="display:inline"><span class="no">not resolved, not cited.</span></span>
+      <span class="rmeta">Candidate sources in the musicology of recording and the work-concept have been identified during drafting but are withheld pending DOI resolution. Naming them here would create exactly the citation-by-plausibility failure this protocol exists to prevent.</span></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Disclosure · D3: machine-drafted, human-directed, human-verification pending.<br>
+  Citation gate run 2026-08 against publisher records. Legibility check pending on device.<br>
+  Released CC0. No rights reserved.</p>
+  <p>Revision history: v0.1 initial · v0.2 scaffolding reduction · v0.3 exhibit demoted to existing practice, HumanEval promoted to evidence · v0.4 restructured to lead with the case · v0.5 central inference repaired (adoption permeable, retirement not); exhibit definition split into collision and inversion · v0.6 citation gate; §4 rewritten around the ceiling fiber following [3] · v0.7 §4 rebuilt on reference-free detectability after panel review; fiber drift added as §4.1; monotonicity condition added to §2.1; portability reframed as a selection effect; panel log added as §8.</p>
+</footer>
+
+</div>
+</body>
+</html>
