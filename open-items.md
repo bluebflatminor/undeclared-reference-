@@ -17,7 +17,12 @@ Was EvalPlus retired purely on saturation, with no demonstration of its own inte
 Two reviewers have independently found it weak, from different directions. Neither objection lands cleanly, but the agreement is a signal. Decide: gate the musicological claim properly, or cut the section and lose nothing structural. Cutting is currently cheaper.
 
 ## 5. Title
-"Same Score, Different Kind" names collision. The evidence is inversion. Either retitle or foreground collision in the argument.
+"Same Score, Different Kind" names collision. The evidence is inversion.
+
+**Preferred resolution (round 5):** do not retitle. Introduce collision in §2.1 as the underlying *condition* — a fiber wide enough to hold systems that differ on T will order them arbitrarily under any tie-breaking pressure — so that inversion is the leaderboard-visible symptom of a collision substrate. The paper already argues this; it is not currently foregrounded early enough for the title to read as naming the substrate rather than the symptom. Cheaper than retitling and defensible.
+
+## 5a. Monotonicity as a positive condition
+§2.1 states monotonicity negatively: inversion occurs when the instrument's measurement is not monotonic in the target ordering. The positive form is the paper's one theorem-shaped claim — *a rate instrument licenses a kind claim only if its measurement is monotonic in the target ordering* — and would make a short appendix. Not written.
 
 ## 6. Operational specification of the remedy
 The reporting requirement in §4.4 is compelling institutionally and vague operationally. Which venue. What constitutes a declaration — a sentence, a table, a validity appendix. Who adjudicates. Needs contact with someone who actually runs a venue or leaderboard.
