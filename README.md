@@ -2,7 +2,7 @@
 
 **Same Score, Different Kind — benchmark fiber structure and the undeclared choice of reference**
 
-Working paper. Draft v0.7. Not for citation.
+Working paper. Draft v0.8. Not for citation. **Revision held pending human review** — see `reviews/panel-log.md`.
 
 Read it: **https://bluebflatminor.github.io/undeclared-reference/**
 
@@ -59,7 +59,8 @@ Both corrections came from adversarial review and both improved the argument. Th
 - **§5 is blocked.** Its historical claim about recording and score authority has no anchor. Candidate sources were identified during drafting and are deliberately **not named anywhere in this repository**, because listing plausible-looking titles is the failure mode the citation gate exists to prevent. Two reviewers have independently found the section weak; cutting it may be cheaper than gating it.
 - **The mechanism rests on one case** and is subject to survivorship: a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction.
 - **The title names the weaker failure.** "Same Score, Different Kind" describes collision; the evidence is inversion. Unresolved.
-- **The proposed remedy is operationally unspecified.** Which venue, what constitutes a declaration, who adjudicates. No proposal offered.
+- **The remedy's institutional feasibility is untested.** §4.5 specifies what a reporting requirement would have to consist of, constrained by the mechanism itself. Whether any venue or leaderboard would adopt it is unknown, and no one who runs one has been asked.
+- **No human has reviewed this.** Every correction to date came from language models used as adversarial instruments, which are correlated with each other and with the model that drafted it. This is the weakest form of review the paper could rest on and is currently the only form it has.
 
 ## Citation gate
 
