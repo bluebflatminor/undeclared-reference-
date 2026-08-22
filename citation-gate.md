@@ -20,7 +20,9 @@ Figures confirmed verbatim at abstract: 80x test augmentation; 26 models evaluat
 "Evaluating Large Language Models Trained on Code." arXiv:2107.03374.
 **Resolved.** Source of HumanEval. 164 hand-written problems; average 7.7 unit tests per problem.
 
-**Open discrepancy.** Two secondary papers (2024–25) report approximately 9.6 test cases per problem rather than 7.7. Counting convention unresolved — possibly whether prompt-embedded example assertions are included. The primary's figure is used in the paper and the discrepancy is carried in the ledger rather than silently resolved.
+**Open discrepancy — DO NOT CLOSE BY ASSERTION.** Two secondary papers (2024–25) report approximately 9.6 test cases per problem rather than 7.7. Counting convention unresolved. The primary's figure is used in the paper and the discrepancy is carried in the ledger rather than silently resolved.
+
+*Tombstone.* A review instrument offered a resolution: that 7.7 is the official average at publication while 9.6 includes post-hoc assertions added by secondary evaluation harnesses. The explanation is plausible and mechanically sensible and **has not been checked by anyone.** It is recorded here as an unverified hypothesis, not adopted, because writing it into a footnote would convert a logged unknown into false precision — inside the verification file of a paper about undeclared assumptions. Closing this item requires reading the harness configurations and counting.
 
 ### [3] Akhtar, Reuel, Soni, Ahuja, Ammanamanchi, Rawal, Zouhar, et al. (2026)
 "When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation." arXiv:2602.16763, submitted 18 February 2026. Accepted at ICML 2026. 37 authors.
