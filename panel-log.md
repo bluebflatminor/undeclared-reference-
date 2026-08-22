@@ -45,6 +45,32 @@ The review was framed as a list of what the paper missed. Three of its four item
 
 Recorded because the two failure modes cancel in a way that could look like independent confirmation. Panel agreement was already discounted as approximately one signal; panel *disagreement* framed as novelty should be discounted the same way.
 
+## Rounds 4–5 — logged under hold, not acted on
+
+Two further instrument reviews were obtained after the hold was recorded. Both are logged; neither produced a change to the argument.
+
+| Status | Item |
+|---|---|
+| **Noted** | *Round 4* — formalize monotonicity positively, as a necessary condition for rate→kind inference, in a short appendix. The paper's one theorem-shaped claim. Added to open items as 5a. Not written. |
+| **Noted** | *Round 4* — a mock leaderboard showing vector reporting surfacing the HumanEval inversion automatically. Worth doing as a *test* of §4.5 rather than an illustration of it: build the display, run the EvalPlus figures through it, see whether the flag fires on the named pair. Behind open item 1 in priority. |
+| **Taken (as an option)** | *Round 5* — the title need not change. Introducing collision in §2.1 as the condition that lets noise surface as inversion makes the title name the substrate rather than the symptom. Recorded as the preferred resolution to open item 5. |
+| **Refused** | *Round 5* — an offered resolution to the 7.7 vs 9.6 discrepancy: that 7.7 is the figure at publication while 9.6 includes post-hoc assertions from secondary harnesses. Plausible, mechanically sensible, **unchecked by anyone.** Adopting it would convert a logged unknown into false precision inside the verification file of a paper about undeclared assumptions. Recorded as a tombstone in `verification/citation-gate.md`; the item stays open. |
+
+### Instrument note — the four framings
+
+Across five rounds the instruments failed in four distinct ways, all of which are the same underlying behaviour:
+
+| Round | Framing produced |
+|---|---|
+| 2 | Manufactured **agreement** — four paragraphs of praise before the first substantive item |
+| 3 | Manufactured **disagreement** — "what the paper missed," three of four items restating §4.3–4.4 |
+| 4 | Manufactured **rigor** — "not praise, but a surgical read," opening and closing on superlatives |
+| 5 | Manufactured **completion** — "ready to be frozen for v1.0," alongside three unresolved items and one closed by assertion |
+
+The fourth is the most expensive, because it recommends stopping at exactly the point where the paper's central mechanism is still fitted to one case. Round 5's item — the offered discrepancy fix — is the concrete form of that failure: an instrument closing a pending item with a plausible sentence rather than a check.
+
+None of these is evidence of independence. Read together they are five samples of one behaviour: modelling review-shape rather than reading text. Weight accordingly.
+
 ## Revision hold
 
 **As of v0.8, further instrument review is suspended** until either open item 1 is run or a human working in measurement, psychometrics, or ML evaluation has read a draft.
