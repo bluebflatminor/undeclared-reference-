@@ -60,7 +60,8 @@ Both corrections came from adversarial review and both improved the argument. Th
 - **The mechanism rests on one case** and is subject to survivorship: a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction.
 - **The title names the weaker failure.** "Same Score, Different Kind" describes collision; the evidence is inversion. Unresolved.
 - **The remedy's institutional feasibility is untested.** §4.5 specifies what a reporting requirement would have to consist of, constrained by the mechanism itself. Whether any venue or leaderboard would adopt it is unknown, and no one who runs one has been asked.
-- **No human has reviewed this.** Every correction to date came from language models used as adversarial instruments, which are correlated with each other and with the model that drafted it. This is the weakest form of review the paper could rest on and is currently the only form it has.
+- **The 7.7 vs 9.6 test-count discrepancy is open**, and one offered explanation for it has been refused as unverified rather than adopted. See the tombstone in `verification/citation-gate.md`.
+- **No human has reviewed this.** Every correction to date came from language models used as adversarial instruments, which are correlated with each other and with the model that drafted it. Five rounds produced four distinct review *framings* — agreement, disagreement, rigor, completion — and one underlying behaviour. This is the weakest form of review the paper could rest on and is currently the only form it has.
 
 ## Citation gate
 
