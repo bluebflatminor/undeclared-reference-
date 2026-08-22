@@ -342,9 +342,9 @@ footer{
   <h1>Same Score,<br>Different Kind</h1>
   <p class="subtitle">Benchmark fiber structure and the undeclared choice of reference</p>
   <div class="draftbar">
-    Draft v0.7 · not for citation<br>
+    Draft v0.8 · not for citation<br>
     Citation gate run 2026-08 · references [1]–[3] confirmed at publisher record<br>
-    §5 anchors ungated · §4 rebuilt after panel review · see ledger
+    §5 anchors ungated · remedy mechanics added §4.5 · see ledger
   </div>
 </header>
 
@@ -535,7 +535,24 @@ footer{
 
   <p><strong>From §4.1:</strong> a declaration fixed at construction cannot anticipate which regions of the partition the population will occupy later. The declaration would have to be a standing obligation rather than a one-time artifact — re-stated against the current field of systems, which is to say attached to the <em>reporting</em> of a score rather than to the release of an instrument. The two defeaters point at the same repair, which is weak evidence that the repair is the right one.</p>
 
-  <p>What remains unspecified is everything operational: which venue, what counts as a declaration, whether a sentence suffices or a validity appendix is required, and who adjudicates. I have no evidence the reporting version would work, and no proposal for its mechanics.</p>
+  <h3>4.5 What a reporting requirement would have to consist of</h3>
+
+  <p>The mechanism constrains the remedy more tightly than it first appears. Whatever is required must be <em>detectable without a declared reference</em> once reported, or it lands in the channel that does not operate. A prose disclosure fails this test: reading it requires interpretation, and interpretation does not survive retransmission. That rules out most of what a validity appendix would contain.</p>
+
+  <p>Two forms survive the constraint.</p>
+
+  <p><strong>Vector reporting with an inversion flag.</strong> Require a tuple rather than a scalar — for code generation, something like base accuracy, boundary-condition stress, and robustness under prompt perturbation — and require the leaderboard to mark any pair whose ordering differs across axes. This converts inversion from something that must be constructed into something visible in the published numbers. Under the account in §4, that is not a cosmetic improvement: it moves interior inadequacy into the only channel the ecosystem reads. It also attacks the selection effect in §4.3 at its source, since the thing that travels is then a profile whose disagreements are part of what travels.</p>
+
+  <p><strong>Executable declarations.</strong> A property-based test generator is a fiber declaration in compiled form. Stating that a sorting implementation must preserve elements and stay within a complexity bound <em>is</em> declaring <em>T</em>, in a form that can be re-run against a population that has since drifted. This answers §4.1 in a way prose cannot. It should not be mistaken for eliminating fibers: a suite that mutates per run randomizes which fiber a system lands in rather than removing the partition, trading resolution for variance, and the stated properties still bound what is checkable at all.</p>
+
+  <p>A third measure requires no declaration whatever and is therefore the cheapest thing on this list: flag instruments by age. Benchmark age is computable without reference to any task, so a leaderboard could mark any instrument past some threshold as low-resolution without adjudicating anything. It routes entirely through the permeable channel.</p>
+
+  <p>What remains unspecified is the institutional question: which venue, who adjudicates, and whether any of this is adoptable by bodies that currently compete for the attention that scalar scores attract. I have no evidence the reporting version would work.</p>
+
+  <div class="callout">
+    <span class="cl-head">One remedy the mechanism rules out</span>
+    <p>Bounties or prizes for producing collision and inversion exhibits are refuted by §1. EvalPlus is what that policy produces: an independent team, a major venue, a named pair, a demonstrated inversion. The instrument it refuted circulated for three more years. If exhibits do not retire instruments, subsidising more exhibits does not change the outcome — it produces more instruments, which is the addition-without-subtraction result restated. Any proposed remedy should be checked against this case before being offered.</p>
+  </div>
 </section>
 
 <section id="designation">
@@ -579,7 +596,7 @@ footer{
     <div class="row"><span class="st d">Unsupported</span><span>§4's mechanism rests on one case and is subject to the survivorship objection. Test: survey benchmark replacements coding each transition's stated proximate cause, predicting ceiling-fiber widening dominates and interior-fiber demonstrations are rare or absent. [3]'s sixty-benchmark dataset may hold part of this; the paper has been confirmed but not read in full.</span></div>
     <div class="row"><span class="st d">Open</span><span>A second exhibit from a different failure mode. Accuracy/calibration divergence is the candidate: equal accuracy, divergent expected calibration error, <em>T</em> = does the system know when it does not know.</span></div>
     <div class="row"><span class="st d">Open</span><span>Whether EvalPlus was also retired without any demonstration of its own interior inadequacy. If so it becomes a second instance of the §4 mechanism rather than merely HumanEval's successor. Not checked.</span></div>
-    <div class="row"><span class="st d">Open</span><span>Operational specification of the reporting requirement: which venue, what counts as a declaration, who adjudicates. No proposal offered.</span></div>
+    <div class="row"><span class="st d">Open</span><span>Institutional feasibility of §4.5. The forms are specified; whether any venue or leaderboard would adopt them is not, and no one who runs one has been asked.</span></div>
     <div class="row"><span class="st d">Open</span><span>Title check. "Same Score, Different Kind" names the collision case; the evidence is inversion. Either retitle or foreground collision.</span></div>
     <div class="row"><span class="st d">Open</span><span>Whether §4.3's reporting-requirement framing survives contact with anyone who runs a venue.</span></div>
   </div>
@@ -598,7 +615,12 @@ footer{
     <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — replace the §5 musical case with a polling analogy. A poll is closer in being a number, but imports political contestation the argument does not need, and the objection that a score is <em>intentionally</em> underdetermined while a benchmark presents as complete is §5's thesis rather than a counter to it. §5 remains ungated and blocked; two reviewers finding it weak is one signal that it may not be worth anchoring at all.</span></div>
     <div class="row"><span class="st u">Declined</span><span><b>Kimi</b> — survivorship is underweighted. §6 states the objection in full, including that a benchmark retired for demonstrated invalidity would be underrepresented in retrospectives by construction. The underlying advice — code a sample from [3]'s sixty rather than noting the dataset exists — is correct and is the standing top open item.</span></div>
     <div class="row"><span class="st d">Noted</span><span><b>Kimi</b> — EvalPlus's own fate should be checked for interior-fiber problems, not only saturation. Would make it a second instance rather than a successor. Not verified; open.</span></div>
-    <div class="row"><span class="st d">Noted</span><span>The review opened with four paragraphs of praise before its first substantive item. Recorded because unearned agreement is the least informative output an instrument can produce, and because the same review restated an objection the paper already concedes — both are signs of reading review-shape rather than text.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — vector reporting with an inversion flag. Requiring a tuple rather than a scalar, with leaderboards marking pairs whose ordering differs across axes, converts inversion from something that must be constructed into something visible in published numbers. Under §4 this is the decisive property: it moves interior inadequacy into the only channel the ecosystem reads. Added as §4.5, and it supplies the mechanics §4.4 previously admitted it lacked.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — property-based test generators, reframed. Offered as an alternative to fiber declarations; better understood as one in compiled form, since stating the properties <em>is</em> declaring <em>T</em> in a shape that can be re-run against a drifted population. Caveat added: a suite mutating per run randomizes which fiber a system lands in rather than removing the partition.</span></div>
+    <div class="row"><span class="st v">Taken</span><span><b>Round 3</b> — age-based flagging. Benchmark age is computable without reference to any task, so it routes entirely through the permeable channel. Cheapest measure on the list.</span></div>
+    <div class="row"><span class="st u">Declined</span><span><b>Round 3</b> — bounties for producing collision and inversion exhibits. Refuted by §1: EvalPlus is what that policy produces, and the instrument it refuted circulated three more years. Recorded in §4.5 as a worked example of a remedy the mechanism rules out.</span></div>
+    <div class="row"><span class="st d">Noted</span><span><b>Round 3</b> — the review was framed as listing what the paper missed, and three of its four items restate §4.3 and §4.4. Opposite failure mode to Round 2: manufactured disagreement rather than manufactured agreement. Both are consistent with reading section headers rather than text, and neither should be weighted as independent signal.</span></div>
+    <div class="row"><span class="st d">Noted</span><span>The Round 2 review opened with four paragraphs of praise before its first substantive item. Recorded because unearned agreement is the least informative output an instrument can produce, and because the same review restated an objection the paper already concedes — both are signs of reading review-shape rather than text.</span></div>
   </div>
 </section>
 
@@ -633,7 +655,7 @@ footer{
   <p>Disclosure · D3: machine-drafted, human-directed, human-verification pending.<br>
   Citation gate run 2026-08 against publisher records. Legibility check pending on device.<br>
   Released CC0. No rights reserved.</p>
-  <p>Revision history: v0.1 initial · v0.2 scaffolding reduction · v0.3 exhibit demoted to existing practice, HumanEval promoted to evidence · v0.4 restructured to lead with the case · v0.5 central inference repaired (adoption permeable, retirement not); exhibit definition split into collision and inversion · v0.6 citation gate; §4 rewritten around the ceiling fiber following [3] · v0.7 §4 rebuilt on reference-free detectability after panel review; fiber drift added as §4.1; monotonicity condition added to §2.1; portability reframed as a selection effect; panel log added as §8.</p>
+  <p>Revision history: v0.1 initial · v0.2 scaffolding reduction · v0.3 exhibit demoted to existing practice, HumanEval promoted to evidence · v0.4 restructured to lead with the case · v0.5 central inference repaired (adoption permeable, retirement not); exhibit definition split into collision and inversion · v0.6 citation gate; §4 rewritten around the ceiling fiber following [3] · v0.7 §4 rebuilt on reference-free detectability after panel review; fiber drift added as §4.1; monotonicity condition added to §2.1; portability reframed as a selection effect; panel log added as §8 · v0.8 §4.5 added — remedy mechanics constrained by the mechanism, with one ruled-out remedy recorded.</p>
 </footer>
 
 </div>
